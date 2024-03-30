@@ -48,6 +48,11 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.30</version>
         </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>4.23.1</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -102,6 +107,23 @@
                         <phase>test</phase>
                         <goals>
                             <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>4.23.1</version>
+                <configuration>
+                    <propertyFile>src/main/resources/db/rabbit.properties</propertyFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>clearCheckSums</goal>
+                            <goal>update</goal>
                         </goals>
                     </execution>
                 </executions>

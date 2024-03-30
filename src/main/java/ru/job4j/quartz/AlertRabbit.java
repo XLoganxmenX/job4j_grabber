@@ -28,7 +28,7 @@ public class AlertRabbit {
         try {
             AlertRabbit alertRabbit = new AlertRabbit();
             int intervalInSecond = Integer.parseInt(
-                    alertRabbit.getPropertiesFrom("rabbit.properties")
+                    alertRabbit.getPropertiesFrom("db/rabbit.properties")
                                .getProperty("rabbit.interval")
             );
 
