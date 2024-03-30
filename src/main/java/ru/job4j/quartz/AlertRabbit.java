@@ -20,6 +20,7 @@ public class AlertRabbit {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return config;
     }
 
