@@ -1,3 +1,3 @@
 create table if not exists rabbit (
-	created_date date
+	created_date timestamp
 )
