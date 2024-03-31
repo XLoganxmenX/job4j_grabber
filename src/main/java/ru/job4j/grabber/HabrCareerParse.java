@@ -20,9 +20,11 @@ public class HabrCareerParse {
         Connection connection = Jsoup.connect(fullLink);
         Document document = connection.get();
         Elements rows = document.select(".vacancy-card__inner");
+
         rows.forEach(row -> {
             Element postDateElement = row.select(".vacancy-card__date").first();
             Element postDate = postDateElement.child(0);
+
             Element titleElement = row.select(".vacancy-card__title").first();
             Element linkElement = titleElement.child(0);
             String vacancyName = titleElement.text();
