@@ -80,13 +80,11 @@ public class AlertRabbit implements AutoCloseable {
             SimpleScheduleBuilder times = simpleSchedule()
                     .withIntervalInSeconds(intervalInSecond)
                     .repeatForever();
-
             Trigger trigger = newTrigger()
                     .startNow()
                     .withSchedule(times)
                     .build();
             scheduler.scheduleJob(job, trigger);
-
             Thread.sleep(10000);
             scheduler.shutdown();
         } catch (Exception e) {
