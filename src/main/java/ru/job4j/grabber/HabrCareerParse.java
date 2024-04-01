@@ -8,6 +8,7 @@ import org.jsoup.select.Elements;
 import ru.job4j.grabber.utils.HabrCareerDateTimeParser;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class HabrCareerParse {
 
@@ -15,10 +16,22 @@ public class HabrCareerParse {
     public static final String PREFIX = "/vacancies?page=";
     public static final String SUFFIX = "&q=Java%20developer&type=all";
 
+    private String retrieveDescription(String link) {
+        Connection linkConnection = Jsoup.connect(link);
+        Document document = null;
+        try {
+            document = linkConnection.get();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return Objects.requireNonNull(document).select(".vacancy-description__text").text();
+    }
+
     public static void main(String[] args) throws IOException {
         HabrCareerDateTimeParser timeParser = new HabrCareerDateTimeParser();
+        HabrCareerParse habrCareerParse = new HabrCareerParse();
 
-        for (int pageNumber = 1; pageNumber <= 5; pageNumber++) {
+        for (int pageNumber = 1; pageNumber <= 1; pageNumber++) {
 
             String fullLink = "%s%s%d%s".formatted(SOURCE_LINK, PREFIX, pageNumber, SUFFIX);
             Connection connection = Jsoup.connect(fullLink);
@@ -32,10 +45,12 @@ public class HabrCareerParse {
                 Element linkElement = titleElement.child(0);
                 String vacancyName = titleElement.text();
                 String link = String.format("%s%s", SOURCE_LINK, linkElement.attr("href"));
-                System.out.printf("%s %s %s%n",
+
+                System.out.printf("%s %s %s %s%n",
                         timeParser.parse(postDate.attr("datetime")),
                         vacancyName,
-                        link
+                        link,
+                        habrCareerParse.retrieveDescription(link)
                 );
             });
         }
