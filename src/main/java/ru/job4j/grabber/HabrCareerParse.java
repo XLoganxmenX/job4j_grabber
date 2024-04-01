@@ -18,7 +18,7 @@ public class HabrCareerParse {
     public static void main(String[] args) throws IOException {
         HabrCareerDateTimeParser timeParser = new HabrCareerDateTimeParser();
 
-        for (int pageNumber = 1; pageNumber <= 5 ; pageNumber++) {
+        for (int pageNumber = 1; pageNumber <= 5; pageNumber++) {
 
             String fullLink = "%s%s%d%s".formatted(SOURCE_LINK, PREFIX, pageNumber, SUFFIX);
             Connection connection = Jsoup.connect(fullLink);
