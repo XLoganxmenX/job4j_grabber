@@ -108,26 +108,4 @@ public class PsqlStore implements Store {
                 queryResult.getTimestamp("created").toLocalDateTime()
         );
     }
-
-    public static void main(String[] args) {
-        Properties connectionConfig = new Properties();
-        try (InputStream in = PsqlStore.class.getClassLoader().getResourceAsStream("db/rabbit.properties")) {
-            connectionConfig.load(in);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        try (PsqlStore psqlStore = new PsqlStore(connectionConfig)) {
-            Post firstPost = new Post("Javist", "https://github.com/XLoganxmenX",
-                    "loooong description", LocalDateTime.now());
-            psqlStore.save(firstPost);
-            System.out.println(firstPost);
-
-            System.out.println(psqlStore.getAll());
-
-            System.out.println(psqlStore.findById(1));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

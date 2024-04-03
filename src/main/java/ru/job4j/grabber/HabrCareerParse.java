@@ -6,7 +6,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import ru.job4j.grabber.utils.DateTimeParser;
-import ru.job4j.grabber.utils.HabrCareerDateTimeParser;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -65,7 +64,6 @@ public class HabrCareerParse implements Parse {
                     dateTimeParser.parse(postDate.attr("datetime"))
             );
 
-            System.out.println(parsedPost);
             vacanciesFromPage.add(parsedPost);
         });
 
@@ -81,10 +79,5 @@ public class HabrCareerParse implements Parse {
             parsedVacancies.addAll(parsePage(fullLink));
         }
         return parsedVacancies;
-    }
-
-    public static void main(String[] args) {
-        HabrCareerParse habrCareerParse = new HabrCareerParse(new HabrCareerDateTimeParser());
-        habrCareerParse.list(SOURCE_LINK);
     }
 }

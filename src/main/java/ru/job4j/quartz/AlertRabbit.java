@@ -59,38 +59,6 @@ public class AlertRabbit implements AutoCloseable {
         }
     }
 
-    public static void main(String[] args) {
-
-        try (AlertRabbit alertRabbit = new AlertRabbit()) {
-            int intervalInSecond = Integer.parseInt(
-                    alertRabbit.getPropertiesFrom("db/rabbit.properties")
-                               .getProperty("rabbit.interval")
-            );
-
-
-            Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-            scheduler.start();
-
-            JobDataMap data = new JobDataMap();
-            data.put("connection", alertRabbit.getConnection());
-
-            JobDetail job = newJob(Rabbit.class)
-                    .usingJobData(data)
-                    .build();
-            SimpleScheduleBuilder times = simpleSchedule()
-                    .withIntervalInSeconds(intervalInSecond)
-                    .repeatForever();
-            Trigger trigger = newTrigger()
-                    .startNow()
-                    .withSchedule(times)
-                    .build();
-            scheduler.scheduleJob(job, trigger);
-            Thread.sleep(10000);
-            scheduler.shutdown();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     public static class Rabbit implements Job {
 
